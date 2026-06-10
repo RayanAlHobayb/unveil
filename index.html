@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unveil — Remove image backgrounds, privately</title>
+  <meta name="description" content="Remove image backgrounds in seconds — 100% in your browser. No uploads, no sign-up. Download or copy a transparent PNG." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' rx='3' fill='%230891B2'/%3E%3Crect x='17' y='2' width='13' height='13' rx='3' fill='%23A5F3FC'/%3E%3Crect x='2' y='17' width='13' height='13' rx='3' fill='%23A5F3FC'/%3E%3Crect x='17' y='17' width='13' height='13' rx='3' fill='%230891B2'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect x="2" y="2" width="13" height="13" rx="3.5" fill="#0891B2"/>
+        <rect x="17" y="2" width="13" height="13" rx="3.5" fill="#A5F3FC"/>
+        <rect x="2" y="17" width="13" height="13" rx="3.5" fill="#A5F3FC"/>
+        <rect x="17" y="17" width="13" height="13" rx="3.5" fill="#0891B2"/>
+      </svg>
+      <span>Unveil</span>
+    </div>
+    <span class="privacy-pill">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Runs entirely in your browser
+    </span>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Remove backgrounds.<br /><em>Keep your privacy.</em></h1>
+      <p class="hero-sub">Drop in any photo and get a clean, transparent PNG in seconds. Everything happens on your device — your images are never uploaded anywhere.</p>
+    </section>
+
+    <!-- Upload stage -->
+    <section id="stage-upload" class="stage">
+      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload an image: drop a file, click to browse, or paste from clipboard">
+        <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp" hidden />
+        <div class="dropzone-inner">
+          <div class="dropzone-icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="3"/>
+              <circle cx="9" cy="9" r="2"/>
+              <path d="M21 15l-3.5-3.5a2 2 0 0 0-2.8 0L6 20"/>
+            </svg>
+          </div>
+          <p class="dropzone-title">Drop an image here</p>
+          <p class="dropzone-hint">or <span class="link-accent">browse files</span> · paste with <kbd>⌘</kbd><kbd>V</kbd></p>
+          <p class="dropzone-formats">PNG · JPG · WebP</p>
+        </div>
+      </div>
+      <p id="upload-error" class="upload-error" role="alert" hidden></p>
+    </section>
+
+    <!-- Processing stage -->
+    <section id="stage-processing" class="stage" hidden>
+      <div class="processing-card">
+        <div class="processing-preview">
+          <img id="processing-thumb" alt="Your image, being processed" />
+          <div class="scan-line" aria-hidden="true"></div>
+        </div>
+        <div class="processing-meta">
+          <div class="spinner" aria-hidden="true"></div>
+          <p id="processing-status" aria-live="polite">Preparing…</p>
+        </div>
+        <div class="progress-track" aria-hidden="true"><div id="progress-bar" class="progress-bar"></div></div>
+        <p class="processing-note" id="processing-note">First run downloads the AI model (~40 MB). It's cached after that, so future images are much faster.</p>
+      </div>
+    </section>
+
+    <!-- Result stage -->
+    <section id="stage-result" class="stage" hidden>
+      <div class="result-card">
+        <div class="result-toolbar">
+          <div class="view-toggle" role="tablist" aria-label="Preview mode">
+            <button id="view-result" class="toggle-btn active" role="tab" aria-selected="true">Removed</button>
+            <button id="view-original" class="toggle-btn" role="tab" aria-selected="false">Original</button>
+          </div>
+          <label class="crisp-toggle" title="Hardens soft edges — best for logos, icons, and graphics">
+            <input type="checkbox" id="crisp-check" />
+            <span class="switch" aria-hidden="true"></span>
+            <span class="crisp-label">Crisp edges <small>for logos &amp; graphics</small></span>
+          </label>
+          <button id="btn-restart" class="btn-ghost">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
+            </svg>
+            New image
+          </button>
+        </div>
+        <div class="result-preview checkerboard">
+          <img id="result-img" alt="Image with background removed" />
+          <img id="original-img" alt="Original image" hidden />
+        </div>
+        <div class="result-actions">
+          <button id="btn-download" class="btn-primary">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/>
+            </svg>
+            Download PNG
+          </button>
+          <button id="btn-copy" class="btn-secondary">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <span id="copy-label">Copy image</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="feature">
+        <div class="feature-icon" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>Private by design</h3>
+        <p>The AI model runs locally in your browser. Nothing is ever uploaded to a server.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        </div>
+        <h3>Fast &amp; free</h3>
+        <p>No sign-up, no watermarks, no limits. Process as many images as you like.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3>True transparency</h3>
+        <p>Get a clean PNG with a real alpha channel — ready for decks, designs, and stores.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Made with care · Images never leave your device</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
