@@ -2,6 +2,8 @@
 
 A clean, single-page web app that removes image backgrounds entirely in the browser.
 
+**Live at [unveil-henna.vercel.app](https://unveil-henna.vercel.app)** — pushes to `main` deploy automatically via Vercel.
+
 - **Drop, browse, or paste** (⌘V) a PNG / JPG / WebP image
 - AI segmentation runs **locally** via [`@imgly/background-removal`](https://github.com/imgly/background-removal-js) — images never leave the device
 - Preview the transparent result on a checkerboard, toggle against the original
