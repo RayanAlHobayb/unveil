@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Unveil — Remove image backgrounds, privately</title>
   <meta name="description" content="Remove image backgrounds in seconds — 100% in your browser. No uploads, no sign-up. Download or copy a transparent PNG." />
+  <link rel="canonical" href="https://unveilbg.com" />
+
+  <!-- Social previews -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Unveil" />
+  <meta property="og:title" content="Unveil — Remove image backgrounds, privately" />
+  <meta property="og:description" content="Free background remover that runs 100% in your browser. No uploads, no sign-up. Download or copy a transparent PNG in seconds." />
+  <meta property="og:url" content="https://unveilbg.com" />
+  <meta property="og:image" content="https://unveilbg.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Unveil — Remove image backgrounds, privately" />
+  <meta name="twitter:description" content="Free background remover that runs 100% in your browser. No uploads, no sign-up." />
+  <meta name="twitter:image" content="https://unveilbg.com/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -98,6 +113,25 @@
           <img id="result-img" alt="Image with background removed" />
           <img id="original-img" alt="Original image" hidden />
         </div>
+        <div class="refine-row">
+          <span class="refine-label">Not quite right?</span>
+          <div class="refine-buttons">
+            <button id="btn-graphics" class="btn-chip" aria-pressed="false">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/>
+              </svg>
+              Graphics mode
+              <small>keeps text &amp; flat colors</small>
+            </button>
+            <button id="btn-hq" class="btn-chip">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2L12 3z"/>
+              </svg>
+              HQ AI re-run
+              <small>larger model, slower</small>
+            </button>
+          </div>
+        </div>
         <div class="result-actions">
           <button id="btn-download" class="btn-primary">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -141,8 +175,20 @@
   </main>
 
   <footer class="site-footer">
-    <p>Made with care · Images never leave your device</p>
+    <p>
+      Made with care · Images never leave your device ·
+      <a href="https://github.com/RayanAlHobayb/unveil" target="_blank" rel="noopener" class="footer-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.69-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.66.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.2.66.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        Source code
+      </a>
+    </p>
   </footer>
+
+  <!-- Vercel Web Analytics (anonymous, cookie-free) -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
